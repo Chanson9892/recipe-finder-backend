@@ -2,8 +2,8 @@ class CreateComments < ActiveRecord::Migration[6.0]
   def change
     create_table :comments do |t|
       t.string :content
-      t.integer :recipe_id
-      t.integer :user_id
+      t.belongs_to :user, null: false, foreign_key: true
+      t.belongs_to :recipe, null: false, foreign_key: true
 
       t.timestamps
     end
