@@ -1,21 +1,10 @@
 class RecipesController < ApplicationController
-    before_action :get_recipe, only: [:show]
-
-    def index
-        @recipes = Recipe.all 
-    end
+    SPOONACULAR_API_KEY = ENV['spoonacular_api_key']
 
     def show
-    end
-
-    private
-
-    def recipe_params
-        params.require(:recipe).permit!
-    end
-
-    def get_recipe
-        @recipe = Recipe.find(params[:id])
+        response = RestClient.get "https://api.spoonacular.com/recipes/complexSearch?titleMatch=#{params[:titleMatch]}&instructionsRequired=true&number=5&api_key=#{SPOONACULAR_API_KEY}"
+        result = JSON.parse(response)
+        render json: result
     end
 
 end
