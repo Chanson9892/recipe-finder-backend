@@ -62,8 +62,6 @@ gem "jwt", "~> 2.2"
 
 gem "faker", "~> 2.14"
 
-gem 'fast_jsonapi'
-
 gem 'rest-client'
 
 gem 'figaro'

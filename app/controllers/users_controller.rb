@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-    skip_before_action :authorized, only: [:create]
+    skip_before_action :authorized, only: [:create, :index, :show]
 
     def index
         users = User.all
@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     end
 
     def profile
-        render json: { user: UserSerializer.new(current_user) }, status: :accepted
+        render json: { user: UserSerializer.new(@user) }, status: :accepted
     end
 
     def create
