@@ -3,7 +3,8 @@ class RecipesController < ApplicationController
 
     def show
         # byebug 
-        response = RestClient.get "https://api.spoonacular.com/recipes/complexSearch?query=#{params[:query]}&instructionsRequired=true&number=5&apiKey=#{SPOONACULAR_API_KEY}"
+        response = RestClient.get "https://api.spoonacular.com/recipes/complexSearch?query=#{params[:query]}
+        &instructionsRequired=true&number=5&apiKey=#{SPOONACULAR_API_KEY}&addRecipeInformation=true&fillIngredients=true"
         result = JSON.parse(response)
         render json: result
     end
