@@ -1,6 +1,11 @@
 class RecipesController < ApplicationController
     SPOONACULAR_API_KEY = ENV['spoonacular_api_key']
 
+    def index
+        recipes = Recipe.where(user_id: @user.id)
+        render json: recipes
+    end
+
     def create
         recipe = Recipe.find_or_create_by(recipe_params)
         render json: recipe
