@@ -2,7 +2,7 @@ class RecipesController < ApplicationController
     SPOONACULAR_API_KEY = ENV['spoonacular_api_key']
 
     def create
-        recipe = Recipe.create(recipe_params)
+        recipe = Recipe.find_or_create_by(recipe_params)
         render json: recipe
     end
 

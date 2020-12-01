@@ -1,21 +1,23 @@
 class FavoritesController < ApplicationController
+    skip_before_action :authorized
+
     def index
         favorites = Favorite.all 
+        render json: favorites
     end
 
     def create
-        byebug
-        @recipe = Recipe.where(api_id: favorite_params[:api_id]).first_or_create do |fave|
-            fave.title = favorite_params[:title]
-            fave.image = favorite_params[:image]
-            fave.url = favorite_params[:url]
-        end
-        @favorite = Favorite.create(user_id: favorite_params[:user_id], recipe_id: @recipe.id)
+        # @recipe = Recipe.where(api_id: favorite_params[:api_id]).first_or_create do |fave|
+        #     fave.title = favorite_params[:title]
+        #     fave.image = favorite_params[:image]
+        #     fave.url = favorite_params[:url]
+        # end
+        @favorite = Favorite.find_or_create_by(favorite_params)
         render json: @favorite
     end
 
     def show
-        @favorite = Favorite.find(params[:id])
+        @favorite = Favorites.find(params[:id])
         render json: @favorite
     end
 
@@ -29,6 +31,6 @@ class FavoritesController < ApplicationController
     private 
 
     def favorite_params
-        params.require(:favorite).permit(:user_id, :api_id, :title, :image, :url)
+        params.require(:favorite).permit(:user_id, :recipe_id, :title, :image, :url)
     end
 end
