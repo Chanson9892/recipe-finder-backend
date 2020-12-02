@@ -1,29 +1,43 @@
 class CommentsController < ApplicationController
-    before_action :get_comment, only: [:show]
 
     def index
-        @comments = Comment.all
+        comments = Comment.where(user_id: @user.id)
+        render json: comments
     end
 
     def show
+        @comment = Comment.find(params[:id])
+        render json: @comment
     end
 
     def new
         @comment = Comment.new
-        @recipes = Recipe.all
     end
 
     def create
-        @comment = Comment.new(comment_params)
-        @comment.user_id = session[:user_id]
-        @comment.save
+        @comment = Comment.find_or_create_by(comment_params) do |comm|
+            comm.user_id = @user.id
+        end
         if @comment.valid?
             redirect_to path(@comments)
         else
             flash[:errors] = @comment.errors.full_messages
             redirect_to new_comment_path
         end
+        render json: @comment
     end
+
+    # def create
+    #     @comment = Comment.new(comment_params)
+    #     @comment.user_id = session[:user_id]
+    #     @comment.save
+    #     if @comment.valid?
+    #         redirect_to path(@comments)
+    #     else
+    #         flash[:errors] = @comment.errors.full_messages
+    #         redirect_to new_comment_path
+    #     end
+    # end
 
     private
 
@@ -31,7 +45,4 @@ class CommentsController < ApplicationController
         params.require(:comment).permit(:user_id, :id, :content)
     end
 
-    def get_comment
-        @comment = Comment.find(params[:id])
-    end
 end
