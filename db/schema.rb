@@ -10,15 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_19_010955) do
+ActiveRecord::Schema.define(version: 2020_12_02_174628) do
 
   create_table "comments", force: :cascade do |t|
     t.text "content"
     t.integer "user_id", null: false
-    t.integer "recipe_id", null: false
+    t.integer "favorite_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["recipe_id"], name: "index_comments_on_recipe_id"
+    t.index ["favorite_id"], name: "index_comments_on_favorite_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 2020_11_19_010955) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "comments", "recipes"
+  add_foreign_key "comments", "favorites"
   add_foreign_key "comments", "users"
   add_foreign_key "favorites", "recipes"
   add_foreign_key "favorites", "users"

@@ -7,11 +7,6 @@ class FavoritesController < ApplicationController
     end
 
     def create
-        # @recipe = Recipe.where(api_id: favorite_params[:api_id]).first_or_create do |fave|
-        #     fave.title = favorite_params[:title]
-        #     fave.image = favorite_params[:image]
-        #     fave.url = favorite_params[:url]
-        # end
         @favorite = Favorite.find_or_create_by(favorite_params) do |fave|
             fave.user_id = @user.id
         end

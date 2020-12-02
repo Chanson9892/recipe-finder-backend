@@ -1,7 +1,6 @@
 class User < ApplicationRecord
-    has_many :comments, dependent: :destroy
     has_many :favorites, dependent: :destroy
-    has_many :recipes, through: :comments
+    has_many :comments, through: :favorites
     has_many :recipes, through: :favorites
 
     has_secure_password 
