@@ -1,5 +1,7 @@
 class CommentSerializer < ActiveModel::Serializer
-    attributes :content
-    belongs_to :recipe
-    belongs_to :user
+    attributes :content :id, :recipe
+    #this grabs the recipe data of the instance of the comment so I can grab the recipe attributes
+    def recipe
+        object.recipe
+    end
 end
