@@ -12,7 +12,9 @@ class FavoritesController < ApplicationController
         #     fave.image = favorite_params[:image]
         #     fave.url = favorite_params[:url]
         # end
-        @favorite = Favorite.find_or_create_by(favorite_params)
+        @favorite = Favorite.find_or_create_by(favorite_params) do |fave|
+            fave.user_id = @user.id
+        end
         render json: @favorite
     end
 
