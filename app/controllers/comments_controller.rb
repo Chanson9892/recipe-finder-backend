@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
 
     def index
-        comments = Comment.where(user_id: @user.id, favorite_id: @favorite.id)
+        comments = Comment.all
         render json: comments
     end
 
@@ -11,10 +11,7 @@ class CommentsController < ApplicationController
     end
 
     def create
-        @comment = Comment.find_or_create_by(comment_params) do |comm|
-            comm.user_id = @user.id
-            comm.favorite_id = @favorite.id
-        end
+        @comment = Comment.create(comment_params)
         if @comment.valid?
             render json: @comment
         else
@@ -42,7 +39,7 @@ class CommentsController < ApplicationController
     private
 
     def comment_params
-        params.require(:comment).permit(:user_id, :id, :content, :favorite_id)
+        params.require(:comment).permit(:content, :favorite_id)
     end
 
 end

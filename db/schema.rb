@@ -14,12 +14,10 @@ ActiveRecord::Schema.define(version: 2020_12_02_174628) do
 
   create_table "comments", force: :cascade do |t|
     t.text "content"
-    t.integer "user_id", null: false
     t.integer "favorite_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["favorite_id"], name: "index_comments_on_favorite_id"
-    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "favorites", force: :cascade do |t|
@@ -48,7 +46,6 @@ ActiveRecord::Schema.define(version: 2020_12_02_174628) do
   end
 
   add_foreign_key "comments", "favorites"
-  add_foreign_key "comments", "users"
   add_foreign_key "favorites", "recipes"
   add_foreign_key "favorites", "users"
 end
